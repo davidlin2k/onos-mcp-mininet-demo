@@ -7,8 +7,8 @@ services:
     stdin_open: true
     volumes:
       - /lib/modules:/lib/modules
-      - ./examples:/root/examples
-    
+      - ./topologies:/root/topologies
+
   onos:
     image: onosproject/onos:latest
     ports:
@@ -18,3 +18,11 @@ services:
       - ./scripts:/scripts
     entrypoint: >
       sh /scripts/onos-entrypoint.sh
+
+  agent:
+    build:
+      context: ./agents
+      dockerfile: Dockerfile
+    env_file:
+      - ./agents/.env
+      

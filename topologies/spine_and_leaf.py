@@ -22,10 +22,10 @@ Examples:
 ---------
 
 1. Basic spine-leaf topology with default settings (2 spines, 4 leaves, 1 host per leaf):
-   sudo mn --custom=./examples/spine_and_leaf.py --topo spineleaf --controller remote,ip=localhost
+   sudo mn --custom=./topologies/spine_and_leaf.py --topo spineleaf --controller remote,ip=localhost
 
 2. Custom spine-leaf topology with 3 spines, 6 leaves, and 4 hosts per leaf:
-   sudo mn --custom=./examples/spine_and_leaf.py --topo spineleaf,spine_count=3,leaf_count=6,hosts_per_leaf=4 \
+   sudo mn --custom=./topologies/spine_and_leaf.py --topo spineleaf,spine_count=3,leaf_count=6,hosts_per_leaf=4 \
      --mac --switch ovs,protocols=OpenFlow14,stp=1 --controller remote,ip=localhost
 
 After the topology starts, you can use Mininet CLI commands like:
