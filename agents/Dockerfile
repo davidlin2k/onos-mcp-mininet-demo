@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN ln -s /usr/local/bin/uv /usr/bin/uv
 
+WORKDIR /root
+RUN git clone https://github.com/davidlin2k/onos-mcp-server.git
+
 # Set working directory
 WORKDIR /app
 
