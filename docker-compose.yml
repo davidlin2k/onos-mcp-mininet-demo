@@ -23,6 +23,8 @@ services:
     build:
       context: ./agents
       dockerfile: Dockerfile
+    profiles:
+      - donotstart
     env_file:
       - ./agents/.env
       
