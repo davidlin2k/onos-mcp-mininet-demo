@@ -1,0 +1,19 @@
+services:
+  mininet:
+    image: davidlin123/mininet:latest
+    privileged: true
+    network_mode: host
+    tty: true
+    stdin_open: true
+    volumes:
+      - /lib/modules:/lib/modules
+    
+  onos:
+    image: onosproject/onos:latest
+    ports:
+      - "8181:8181"
+      - "6653:6653"
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: >
+      sh /scripts/onos-entrypoint.sh
