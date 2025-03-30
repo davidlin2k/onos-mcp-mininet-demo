@@ -1,5 +1,6 @@
 services:
   mininet:
+    container_name: onos-mininet
     image: davidlin123/mininet:latest
     privileged: true
     network_mode: host
@@ -10,16 +11,18 @@ services:
       - ./topologies:/root/topologies
 
   onos:
+    container_name: onos-controller
     image: onosproject/onos:latest
     ports:
-      - "8181:8181"
-      - "6653:6653"
-    volumes:
-      - ./scripts:/scripts
-    entrypoint: >
-      sh /scripts/onos-entrypoint.sh
+      - "8181:8181"  # REST API and GUI
+      - "6653:6653"  # OpenFlow
+      - "8101:8101"  # ONOS CLI
+      - "9876:9876"  # ONOS clustering
+    environment:
+      - ONOS_APPS=gui2,drivers,openflow,fwd
 
   agent:
+    container_name: onos-agent
     build:
       context: ./agents
       dockerfile: Dockerfile
@@ -29,4 +32,3 @@ services:
       - ./agents:/app
     env_file:
       - ./agents/.env
-      
