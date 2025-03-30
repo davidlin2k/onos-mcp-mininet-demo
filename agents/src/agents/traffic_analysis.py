@@ -1,9 +1,16 @@
+"""Traffic Analysis Agent.
+
+This module provides an AI agent specialized in analyzing network traffic patterns.
+It can detect anomalies, identify bottlenecks, and suggest optimizations.
+"""
+
 import asyncio
 
 from agents import Agent, Runner
 from agents.mcp import MCPServerStdio
 
 async def main():
+    """Run the traffic analysis agent."""
     async with MCPServerStdio(
         cache_tools_list=True,  # Cache the tools list, for demonstration
         params={
@@ -28,4 +35,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-    

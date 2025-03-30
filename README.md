@@ -92,3 +92,22 @@ The server uses the following environment variables:
 - `ONOS_API_BASE`: Base URL for ONOS API (default: http://localhost:8181/onos/v1)
 - `ONOS_USERNAME`: Username for ONOS API authentication (default: onos)
 - `ONOS_PASSWORD`: Password for ONOS API authentication (default: rocks)
+
+## Available Example Agents
+
+- `network_summary.py` - Provides a high-level summary of the network state
+- `traffic_analysis.py` - Analyzes traffic patterns and identifies potential issues
+
+## Setup
+
+1. Copy `.env.example` to `.env` and add your OpenAI API key:
+```bash
+cp ./agents/.env.example ./agents/.env
+```
+
+## Running Agents
+
+Use Docker Compose:
+```bash
+docker compose run agent
+```

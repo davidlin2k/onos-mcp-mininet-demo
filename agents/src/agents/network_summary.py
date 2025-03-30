@@ -1,9 +1,16 @@
+"""Network Summary Agent.
+
+This module provides an AI agent that generates high-level summaries of the ONOS network state.
+It uses MCP to communicate with ONOS and provides human-readable network analysis.
+"""
+
 import asyncio
 
 from agents import Agent, Runner
 from agents.mcp import MCPServerStdio
 
 async def main():
+    """Run the network summary agent."""
     async with MCPServerStdio(
         cache_tools_list=True,  # Cache the tools list, for demonstration
         params={
