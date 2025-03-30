@@ -12,7 +12,7 @@ async def main():
                 "--directory", "/root/onos-mcp-server/src/onos_mcp_server",
                 "run", "server.py"
             ],
-            "env": {"ONOS_API_BASE": "onos"}
+            "env": {"ONOS_API_BASE": "http://onos:8181/onos/v1"}
         },
     ) as onos_mcp_server:
         # Create a new agent specialized for traffic analysis

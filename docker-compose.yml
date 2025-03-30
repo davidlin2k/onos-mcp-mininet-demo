@@ -25,6 +25,8 @@ services:
       dockerfile: Dockerfile
     profiles:
       - donotstart
+    volumes:
+      - ./agents:/app
     env_file:
       - ./agents/.env
       
