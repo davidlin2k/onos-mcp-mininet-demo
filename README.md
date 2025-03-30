@@ -111,3 +111,8 @@ Use Docker Compose:
 ```bash
 docker compose run agent
 ```
+
+Specify the agent you want to run:
+```bash
+docker compose run agent ./src/agents/traffic_analysis.py
+```
