@@ -140,3 +140,5 @@ mininet> h1 ping h2
 Expected: Pings fail due to the misconfigured backup path.
 
 4. Ask MCP to find the issue
+
+Example: https://claude.ai/share/1955d2e5-1ec8-4e02-9931-0f020a046181
