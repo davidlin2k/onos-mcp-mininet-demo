@@ -19,7 +19,7 @@ services:
       - "8101:8101"  # ONOS CLI
       - "9876:9876"  # ONOS clustering
     environment:
-      - ONOS_APPS=gui2,drivers,openflow,fwd,intent
+      - ONOS_APPS=gui2,drivers,openflow,fwd
 
   agent:
     container_name: onos-agent
