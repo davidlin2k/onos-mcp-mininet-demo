@@ -8,7 +8,6 @@ services:
     stdin_open: true
     volumes:
       - /lib/modules:/lib/modules
-      - ./topologies:/root/topologies
 
   onos:
     container_name: onos-controller
