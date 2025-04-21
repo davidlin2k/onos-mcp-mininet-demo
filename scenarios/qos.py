@@ -45,12 +45,14 @@ MAX_BW = 15
 
 def setup_network():
     setLogLevel('info')
-    net = Mininet(controller=RemoteController,
-                  switch=OVSSwitch,
-                  link=TCLink,
-                  autoSetMacs=True)
+    net = Mininet(
+        controller=RemoteController,
+        switch=OVSSwitch,
+        link=TCLink,
+        autoSetMacs=True
+    )
 
-    # Controller
+    # Remote ONOS controller
     net.addController('c0', RemoteController, ip='127.0.0.1', port=6653)
 
     # Core and leaf switches
@@ -64,7 +66,7 @@ def setup_network():
     h_bg2 = net.addHost('h3', ip='10.0.0.3/24')
     h_video_dst = net.addHost('h4', ip='10.0.0.4/24')
 
-    # Random host lists
+    # Random hosts lists
     rand_s1 = []
     rand_s2 = []
 
@@ -82,9 +84,10 @@ def setup_network():
         net.addLink(host, s2, cls=TCLink, bw=20, delay='2ms')
         rand_s2.append(host)
 
-    # Fixed links
+    # Fixed links between core and leaves
     net.addLink(s0, s1, cls=TCLink, bw=100, delay='5ms')
     net.addLink(s0, s2, cls=TCLink, bw=100, delay='5ms')
+    # Host-to-leaf links
     net.addLink(h_video_src, s1, cls=TCLink, bw=50, delay='2ms')
     net.addLink(h_bg1, s1, cls=TCLink, bw=20, delay='2ms')
     net.addLink(h_video_dst, s2, cls=TCLink, bw=50, delay='2ms')
@@ -92,31 +95,28 @@ def setup_network():
 
     # Start network
     net.start()
-    info('[*] Network started; waiting for ONOS discovery...\n')
-    time.sleep(5)
 
-    # Start fixed background traffic
-    info('[*] Starting fixed UDP traffic h2->h3...\n')
+    # Launch fixed background traffic in infinite loop
+    info('[*] Launching fixed UDP traffic h2->h3 indefinitely...\n')
     h_bg1.cmd('iperf -u -s &')
-    h_bg2.cmd('iperf -u -c 10.0.0.2 -b 15M -t 60 &')
+    h_bg2.cmd('while true; do iperf -u -c 10.0.0.2 -b 15M -t 60; done &')
 
-    # Start random background traffic
+    # Launch random background traffic loops
     for src in rand_s1:
         dst = random.choice(rand_s2)
         bw = random.randint(MIN_BW, MAX_BW)
-        info(f'[*] Random UDP {bw}Mbps {src.name}->{dst.IP()}...\n')
+        info(f'[*] Random UDP {bw}Mbps {src.name}->{dst.IP()} indefinitely...\n')
         dst.cmd('iperf -u -s &')
-        src.cmd(f'iperf -u -c {dst.IP()} -b {bw}M -t 60 &')
+        src.cmd(f'while true; do iperf -u -c {dst.IP()} -b {bw}M -t 60; done &')
 
-    # Simulate video stream via iperf UDP
+    # Start continuous video stream via iperf UDP
     info('[*] Starting iperf UDP server on h4...\n')
     h_video_dst.cmd('iperf -u -s &')
     time.sleep(1)
-    info('[*] Simulating video stream at 8 Mbps from h1->h4...\n')
-    result = h_video_src.cmd('iperf -u -c 10.0.0.4 -b 8M -t 60')
-    info(result)
+    info('[*] Simulating continuous video stream at 8 Mbps from h1->h4...\n')
+    h_video_src.cmd('while true; do iperf -u -c 10.0.0.4 -b 8M -t 60; done &')
 
-    info('[*] Setup complete. Entering CLI...\n')
+    info('[*] Scenario setup complete. Entering CLI for inspection...\n')
     from mininet.cli import CLI
     CLI(net)
     net.stop()
