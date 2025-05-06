@@ -8,6 +8,7 @@ services:
     stdin_open: true
     volumes:
       - /lib/modules:/lib/modules
+      - ./examples:/examples
 
   onos:
     container_name: onos-controller
@@ -18,7 +19,7 @@ services:
       - "8101:8101"  # ONOS CLI
       - "9876:9876"  # ONOS clustering
     environment:
-      - ONOS_APPS=gui2,drivers,openflow,fwd
+      - ONOS_APPS=gui2,drivers,openflow,proxyarp
 
   agent:
     container_name: onos-agent
