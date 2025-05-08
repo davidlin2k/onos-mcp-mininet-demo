@@ -1,14 +1,16 @@
 services:
   mininet:
-    container_name: onos-mininet
-    image: davidlin123/mininet:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mininet
     privileged: true
-    network_mode: host
-    tty: true
     stdin_open: true
+    tty: true
+    network_mode: "host"
     volumes:
       - /lib/modules:/lib/modules
-      - ./examples:/examples
+    command: ["tail", "-f", "/dev/null"]
 
   onos:
     container_name: onos-controller
@@ -20,15 +22,3 @@ services:
       - "9876:9876"  # ONOS clustering
     environment:
       - ONOS_APPS=gui2,drivers,openflow,proxyarp
-
-  agent:
-    container_name: onos-agent
-    build:
-      context: ./agents
-      dockerfile: Dockerfile
-    profiles:
-      - donotstart
-    volumes:
-      - ./agents:/app
-    env_file:
-      - ./agents/.env
