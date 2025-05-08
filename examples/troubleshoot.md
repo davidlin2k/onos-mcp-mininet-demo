@@ -1,3 +1,31 @@
+
+## Example Scenario
+
+1. 
+
+```bash
+sudo mn --switch ovs,protocols=OpenFlow14 --controller remote,ip=localhost
+```
+
+2. Introduce Misconfiguration in Backup Path via MCP
+
+```bash
+./scripts/install_bad_rule.sh
+```
+
+3. Disable the Primary Path Link
+
+```bash
+mininet> h1 ping h2
+```
+
+Expected: Pings fail due to the misconfigured backup path.
+
+4. Ask MCP to find the issue
+
+[FULL LINK BLINDED FOR REVIEW]
+
+
 **User:**  
 >I can't ping from h1 to h2 despite having reactive forwarding enabled, troubleshoot the flow configuration.
 
