@@ -59,7 +59,7 @@ To integrate with MCP, follow these steps:
 
 1. Clone the ONOS MCP server repository:
 ```
-git clone https://github.com/davidlin2k/onos-mcp-server.git
+git clone https://anonymous.4open.science/r/onos-mcp-server-07E8
 cd onos-mcp-server
 ```
 
